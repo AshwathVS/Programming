@@ -9,31 +9,27 @@ void solve() {
   int t;
   cin >> t;
   while (t--) {
-    int n, k, ctr=0;
-    cin >> n >> k;
-    vector<int> in;
-    in.reserve(n);
-    copy_n(istream_iterator<int>(cin), n, back_inserter(in));
-    int max=INT_MIN;
-    long long sum=0;
-    for(int i=0; i<n/2; i++) {
-      int j=in[i] + in[n-1-i];
-      sum += j;
-      if (j > max) {
-        max=j;
+      int n, k;
+      cin >> n >> k;
+      vector<int> a(n+4, 0), cnt((2*k) + 4, 0);
+      // for (int i = 1; i < cnt.size(); i++)cnt[i] = 0;
+      for (int i = 1; i <= n; i++)
+          scanf("%d", &a[i]);
+
+      for (int i = 1; i <= n / 2; i++) {
+          cnt[1] += 2;
+          cnt[min(a[i], a[n - i + 1]) + 1]--;
+          cnt[max(a[i], a[n - i + 1]) + k + 1]++;
+          cnt[a[i] + a[n - i + 1]]--;
+          cnt[a[i] + a[n - i + 1] + 1]++;
       }
-    }
-    long long avg = sum / (n/2);
-    if (in.size() > 4) max = avg;
-
-
-    for (int i=0; i<n/2; i++) {
-      int j = in[i]+in[n-1-i];
-      if (j!=max) ctr++;
-    }
-    cout << ctr << endl;
+      int ans = n;
+      for (int i = 1; i <= k * 2; i++) {
+          cnt[i] += cnt[i - 1];
+          ans = min(ans, cnt[i]);
+      }
+      cout << ans << endl;
   }
-
 }
 
 int main() {
