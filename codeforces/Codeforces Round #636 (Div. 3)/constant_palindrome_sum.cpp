@@ -19,8 +19,8 @@ void solve() {
       for (int i = 1; i <= n / 2; i++) {
           cnt[1] += 2;
           cnt[min(a[i], a[n - i + 1]) + 1]--;
-          cnt[max(a[i], a[n - i + 1]) + k + 1]++;
           cnt[a[i] + a[n - i + 1]]--;
+          cnt[max(a[i], a[n - i + 1]) + k + 1]++;
           cnt[a[i] + a[n - i + 1] + 1]++;
       }
       int ans = n;
