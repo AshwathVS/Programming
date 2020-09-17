@@ -1,33 +1,26 @@
 class Solution {
 public:
-    int lengthOfLongestSubstring(string inpString) {
-        set<char> distinctSet;
-        set<char> :: iterator it;
-        // string inpString = s;
-        // cout << "Enter string: " << endl;
-        // cin >> inpString;
-        int maxLength = 0;
-        int startPointer = 0;
-        for(int i = 0; i < inpString.length(); i++) {
-            it = distinctSet.find(inpString[i]);
-            if(it != distinctSet.end()) {
-                while(inpString[startPointer] != inpString[i]) {
-                    distinctSet.erase(inpString[startPointer]);
-                    startPointer++;
+    int lengthOfLongestSubstring(string s) {
+        set<char> seen;
+        int maxx = INT_MIN, count = 0, start = 0;
+
+        for(int i=0; i<s.size(); i++) {
+            char c = s[i];
+
+            if(seen.find(c) != seen.end()) {
+                while(s[start] != c) {
+                    seen.erase(s[start]);
+                    start++;
+                    count--;
                 }
-                distinctSet.erase(inpString[startPointer]);
-                startPointer++;
-                distinctSet.insert(inpString[i]);
+                start++;
+            } else {
+                seen.insert(c);
+                count++;
+                maxx = max(maxx, count);
             }
-            else {
-                distinctSet.insert(inpString[i]);
-            }
-
-            if(distinctSet.size() > maxLength) {
-                    maxLength = distinctSet.size();
-            }
-
         }
-            return maxLength;
-        }
+
+        return maxx == INT_MIN? 0 : maxx;
+    }
 };
