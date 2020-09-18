@@ -1,19 +1,19 @@
-#include <iostream>
-
-using namespace std;
-
 class Solution {
 public:
-    int reverse(int n) {
-        int result = 0, remainder = 0;
-        
-        while (n != 0) {
-            remainder = n % 10;
-            if (result > INT_MAX/10 || (result == INT_MAX/10 && remainder > 7)) return 0;
-            if (result < INT_MIN/10 || (result == INT_MIN / 10 && remainder < -8)) return 0;
-            result = result * 10 + remainder;
-            n = n / 10;
+   int reverse(int n) {
+        int result = 0, mod;
+        int xx = INT_MAX / 10;
+        int yy = INT_MIN / 10;
+        while(n) {
+            mod = n%10;
+
+            if(result > xx || (result == xx && mod > 7)) return 0;
+            if(result < yy || (result == yy && mod < -8)) return 0;
+
+            result = result * 10 + mod;
+            n=n/10;
         }
+
         return result;
     }
 };
