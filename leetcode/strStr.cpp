@@ -1,36 +1,41 @@
 class Solution {
 public:
     int strStr(string haystack, string needle) {
-        if (needle == "") {
-            return 0;
-        }
-        
+        int nsize = needle.size();
+
+        if(nsize == 0) return 0;
+        else if(haystack.size() < nsize) return -1;
+
         int result = -1;
-        
-        int wstart = 0;
-        int wend = needle.length() - 1;
-        
-        while (wend < haystack.size()) {
-            int start = 0;
-            if (haystack[wstart] == needle[start]) {
-                int i;
-                start = wstart;
-                for (i = wstart; i <= wend; i++) {
-                    if (haystack[i] != needle[i - start]) {
-                        break;
-                    }
+        int start = 0, end = nsize-1;
+
+        while(start+nsize-1 <= haystack.size()) {
+            int tmpstart = start, i=0, nextstart = start+nsize;
+            bool found = false;
+
+            while(tmpstart <= end) {
+
+                if(tmpstart > start && haystack[tmpstart] == needle[0]) {
+                    found = true;
+                    nextstart = min(nextstart, tmpstart);
                 }
-                if (i == wend + 1) {
-                    result = start;
-                    break;
-                }
+
+                if(haystack[tmpstart] != needle[i]) break;
+
+                i++;
+                tmpstart++;
             }
-            
-            wstart++;
-            wend++;
+
+            if(tmpstart == end + 1) {
+                result = start;
+                break;
+            } else {
+                if(found) start = nextstart;
+                else start++;
+                end = start + nsize-1;
+            }
         }
-        
-        
+
         return result;
     }
 };
