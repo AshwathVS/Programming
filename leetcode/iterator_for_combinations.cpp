@@ -1,13 +1,12 @@
 class CombinationIterator {
 private:
-    vector<string> combinations;
-    int curr = 0;
+    queue<string> combinations;
     int _LEN;
     string str;
     int strSize;
 
     void calcCombinations(string rollingStr, int start, int len) {
-        if(len == 0) combinations.push_back(rollingStr);
+        if(len == 0) combinations.push(rollingStr);
         else if(start >= str.size()) return;
         else {
             for(int i=start; i+len-1 < strSize; i++) {
@@ -27,10 +26,12 @@ public:
     }
 
     string next() {
-        return combinations[curr++];
+        string res = combinations.front();
+        combinations.pop();
+        return res;
     }
 
     bool hasNext() {
-        return curr < combinations.size();
+        return !combinations.empty();
     }
 };
