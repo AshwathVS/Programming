@@ -7,6 +7,12 @@ public:
         int r = matrix.size()-1;
         int c = matrix[0].size()-1;
         int total = (r+1)*(c+1);
+		
+		// left_t_c -> left top corner
+		// left_b_c -> left bottom corner
+		// right_t_c -> right top corner
+		// right_b_c -> right bottom corner
+		
         pair<int, int> left_t_c{0, 0}, left_b_c{r, 0}, right_t_c{0, c}, right_b_c{r, c};
 
         while(res.size() < total) {
